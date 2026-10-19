@@ -1,80 +1,451 @@
-import { motion, useMotionValue, useTransform } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { motion, useTransform, useSpring } from 'framer-motion';
 
-const INDIA_PATH = "M 209,45 L 213,45 L 216,48 L 225,45 L 227,50 L 235,60 L 247,65 L 252,71 L 256,72 L 256,78 L 260,82 L 272,85 L 272,91 L 280,91 L 284,87 L 287,87 L 295,81 L 299,79 L 308,79 L 314,74 L 325,80 L 331,79 L 338,87 L 332,111 L 326,115 L 326,118 L 322,119 L 322,124 L 318,131 L 312,131 L 308,133 L 312,142 L 308,145 L 308,148 L 312,151 L 320,151 L 319,159 L 324,168 L 319,173 L 317,172 L 312,178 L 308,178 L 305,176 L 304,170 L 296,172 L 295,174 L 304,188 L 303,195 L 306,198 L 304,202 L 305,206 L 307,208 L 312,202 L 319,213 L 324,217 L 332,217 L 336,221 L 338,221 L 339,226 L 341,228 L 352,231 L 357,238 L 343,251 L 344,255 L 341,259 L 341,266 L 336,273 L 336,277 L 344,281 L 346,281 L 347,279 L 350,280 L 356,285 L 364,288 L 368,294 L 370,294 L 372,297 L 379,301 L 386,300 L 394,306 L 401,305 L 403,311 L 413,312 L 416,315 L 418,314 L 418,311 L 431,313 L 436,309 L 442,314 L 449,314 L 450,322 L 464,329 L 467,329 L 474,325 L 476,327 L 477,333 L 491,332 L 497,334 L 499,337 L 502,337 L 509,332 L 510,336 L 514,338 L 518,336 L 527,335 L 531,335 L 533,337 L 535,334 L 536,326 L 535,322 L 531,318 L 531,305 L 534,300 L 535,292 L 539,292 L 544,288 L 549,289 L 552,292 L 551,307 L 554,310 L 554,312 L 551,314 L 560,323 L 569,322 L 579,325 L 584,324 L 589,319 L 592,319 L 597,322 L 619,320 L 632,315 L 630,311 L 630,303 L 627,301 L 622,302 L 618,299 L 618,294 L 620,291 L 629,292 L 632,290 L 639,290 L 643,288 L 645,285 L 644,281 L 648,277 L 655,275 L 660,265 L 671,263 L 675,259 L 680,250 L 688,244 L 691,244 L 697,248 L 703,248 L 708,250 L 713,243 L 724,237 L 729,241 L 732,241 L 731,245 L 727,249 L 728,250 L 735,247 L 738,254 L 738,257 L 732,265 L 734,266 L 738,263 L 741,263 L 744,265 L 752,265 L 755,267 L 759,267 L 758,272 L 760,276 L 759,278 L 754,280 L 749,287 L 750,291 L 756,297 L 756,300 L 752,300 L 745,294 L 734,297 L 714,316 L 708,319 L 707,323 L 709,328 L 709,336 L 706,345 L 698,354 L 698,357 L 703,361 L 701,369 L 694,381 L 692,392 L 690,395 L 683,393 L 671,394 L 673,398 L 673,419 L 667,422 L 667,431 L 670,441 L 665,448 L 659,446 L 655,450 L 653,434 L 647,423 L 646,411 L 642,404 L 636,405 L 636,410 L 633,414 L 633,422 L 630,425 L 627,425 L 625,422 L 621,422 L 622,418 L 616,409 L 616,403 L 619,394 L 626,393 L 628,389 L 633,389 L 634,385 L 637,384 L 641,378 L 640,370 L 646,370 L 643,366 L 636,364 L 613,364 L 608,366 L 596,367 L 584,365 L 579,363 L 578,345 L 575,340 L 573,341 L 573,346 L 571,347 L 562,343 L 560,336 L 557,334 L 555,335 L 558,338 L 558,340 L 555,339 L 552,342 L 548,341 L 548,338 L 550,337 L 549,335 L 544,336 L 542,341 L 538,344 L 536,351 L 538,353 L 541,353 L 547,360 L 555,360 L 555,363 L 559,366 L 559,369 L 547,369 L 545,376 L 543,378 L 540,376 L 536,384 L 539,388 L 544,391 L 554,392 L 556,402 L 551,407 L 551,410 L 557,417 L 556,421 L 561,421 L 563,423 L 560,429 L 562,431 L 561,437 L 566,448 L 566,460 L 568,466 L 557,468 L 556,463 L 553,469 L 551,469 L 550,466 L 546,468 L 540,468 L 539,464 L 537,463 L 515,474 L 511,478 L 513,491 L 515,495 L 512,498 L 511,503 L 507,507 L 480,522 L 478,522 L 478,517 L 474,518 L 470,522 L 476,524 L 464,534 L 448,557 L 442,563 L 433,567 L 422,581 L 405,591 L 399,597 L 400,607 L 396,612 L 384,617 L 374,617 L 370,621 L 366,631 L 363,634 L 358,634 L 357,629 L 348,632 L 341,645 L 341,656 L 344,664 L 343,679 L 345,683 L 345,693 L 348,696 L 348,703 L 345,719 L 335,736 L 333,745 L 336,751 L 335,757 L 338,782 L 322,782 L 320,784 L 321,788 L 311,801 L 311,804 L 314,807 L 322,807 L 325,811 L 324,813 L 320,811 L 314,811 L 311,813 L 296,815 L 292,820 L 291,828 L 288,834 L 272,843 L 265,842 L 260,838 L 252,829 L 243,815 L 238,803 L 241,799 L 240,794 L 232,778 L 227,756 L 221,748 L 219,742 L 210,732 L 203,719 L 198,703 L 196,686 L 192,681 L 189,666 L 177,650 L 176,643 L 173,640 L 173,635 L 165,623 L 161,591 L 155,569 L 155,565 L 157,565 L 158,563 L 153,560 L 152,549 L 155,547 L 155,544 L 151,540 L 149,523 L 149,515 L 154,503 L 154,495 L 148,483 L 148,476 L 150,471 L 146,468 L 146,465 L 148,456 L 153,455 L 144,452 L 143,453 L 140,460 L 139,478 L 132,485 L 110,495 L 100,495 L 89,489 L 82,482 L 78,477 L 75,471 L 76,470 L 70,468 L 60,457 L 55,449 L 58,445 L 62,446 L 65,450 L 67,448 L 74,449 L 77,445 L 81,445 L 83,443 L 88,444 L 95,433 L 94,432 L 83,434 L 76,439 L 63,436 L 49,426 L 48,424 L 51,421 L 46,419 L 45,413 L 41,415 L 38,412 L 38,409 L 42,404 L 52,403 L 54,401 L 56,394 L 59,397 L 76,396 L 83,400 L 96,393 L 100,394 L 102,399 L 106,399 L 111,394 L 112,383 L 107,372 L 103,367 L 103,360 L 94,359 L 89,351 L 89,347 L 92,343 L 92,336 L 90,334 L 83,334 L 75,328 L 78,316 L 90,305 L 93,299 L 99,294 L 104,294 L 107,297 L 107,301 L 110,304 L 121,299 L 130,300 L 134,298 L 137,295 L 139,289 L 144,284 L 147,277 L 164,265 L 168,259 L 174,243 L 182,240 L 188,228 L 196,219 L 204,213 L 201,210 L 202,204 L 204,202 L 203,191 L 211,185 L 218,185 L 222,180 L 216,175 L 206,174 L 204,165 L 197,165 L 194,162 L 185,159 L 180,153 L 181,133 L 179,130 L 177,116 L 178,114 L 183,112 L 186,107 L 191,106 L 194,100 L 186,96 L 185,91 L 187,88 L 175,84 L 173,82 L 172,77 L 162,78 L 160,76 L 161,66 L 166,63 L 175,52 L 188,53 L 192,48 L 196,50 L 203,46 L 209,45 Z";
+// Constellation nodes across the sacred geography of Bharat
+// Center: MANIT Bhopal (250, 310 in a 500x600 coordinate space)
+const BHARAT_CONSTELLATIONS = [
+  { id: 'bhopal', name: 'MANIT Bhopal (Heart of Bharat)', x: 250, y: 310, hub: true },
+  { id: 'kashmir', name: 'Kashmir (Sharada Peeth)', x: 215, y: 75 },
+  { id: 'delhi', name: 'Delhi (Indraprastha)', x: 235, y: 195 },
+  { id: 'varanasi', name: 'Kashi / Varanasi (Vidyapeeth)', x: 340, y: 275 },
+  { id: 'nalanda', name: 'Nalanda / Patna', x: 375, y: 285 },
+  { id: 'guwahati', name: 'Guwahati (Pragjyotishpur)', x: 440, y: 245 },
+  { id: 'kolkata', name: 'Kolkata', x: 395, y: 335 },
+  { id: 'mumbai', name: 'Mumbai', x: 175, y: 380 },
+  { id: 'bengaluru', name: 'Bengaluru (Science Hub)', x: 230, y: 470 },
+  { id: 'chennai', name: 'Chennai', x: 275, y: 475 },
+  { id: 'kanyakumari', name: 'Kanyakumari (Vivekananda Memorial)', x: 245, y: 555 },
+  { id: 'somnath', name: 'Somnath / Gujarat', x: 125, y: 320 },
+];
+
+// Connecting network lines radiating from MANIT Bhopal and along ancient cultural routes
+const NETWORK_EDGES = [
+  ['bhopal', 'delhi'],
+  ['bhopal', 'varanasi'],
+  ['bhopal', 'mumbai'],
+  ['bhopal', 'bengaluru'],
+  ['bhopal', 'somnath'],
+  ['delhi', 'kashmir'],
+  ['delhi', 'varanasi'],
+  ['varanasi', 'nalanda'],
+  ['nalanda', 'kolkata'],
+  ['nalanda', 'guwahati'],
+  ['mumbai', 'bengaluru'],
+  ['bengaluru', 'chennai'],
+  ['bengaluru', 'kanyakumari'],
+  ['chennai', 'kanyakumari'],
+];
+
+// Floating golden diya sparks (16 particles)
+const DIYA_PARTICLES = Array.from({ length: 16 }).map((_, i) => ({
+  id: i,
+  left: `${(i * 6.2 + 4) % 94}%`,
+  size: (i % 3) * 2 + 3,
+  delay: (i * 0.7) % 8,
+  duration: 12 + (i % 6) * 2.5,
+  opacity: 0.14 + (i % 4) * 0.08,
+}));
 
 export default function GlobalBackground({ mouseX, mouseY }) {
-  // Rotate based on global mouse position
-  const rotateX = useTransform(mouseY, [-500, 500], [15, -15]);
-  const rotateY = useTransform(mouseX, [-500, 500], [-15, 15]);
+  // Smooth spring physics for parallax depth
+  const rawRotateX = useTransform(mouseY, [-500, 500], [4, -4]);
+  const rawRotateY = useTransform(mouseX, [-500, 500], [-4, 4]);
+  const rotateX = useSpring(rawRotateX, { damping: 40, stiffness: 60, mass: 0.8 });
+  const rotateY = useSpring(rawRotateY, { damping: 40, stiffness: 60, mass: 0.8 });
+
+  const rawParallaxX = useTransform(mouseX, [-500, 500], [-15, 15]);
+  const rawParallaxY = useTransform(mouseY, [-500, 500], [-15, 15]);
+  const parallaxX = useSpring(rawParallaxX, { damping: 35, stiffness: 50 });
+  const parallaxY = useSpring(rawParallaxY, { damping: 35, stiffness: 50 });
 
   return (
     <div
       style={{
         position: 'fixed',
         inset: 0,
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        perspective: 1200,
         zIndex: -1,
-        pointerEvents: 'none', // Lets clicks pass through to sections
-        background: 'radial-gradient(circle, var(--bg-parchment) 40%, #e6d2bc 100%)', // Vintage vignette
-        overflow: 'hidden'
+        pointerEvents: 'none',
+        overflow: 'hidden',
+        background: 'radial-gradient(circle at 50% 30%, #FFFDF8 0%, #F8EFE2 65%, #EDE1CD 100%)',
       }}
+      aria-hidden="true"
     >
-      {/* Sunburst from logo, centered in background */}
-      <div className="sunburst" style={{ opacity: 0.6 }} />
-      <div className="pattern-rangoli" style={{ opacity: 0.08 }} />
-
-      {/* 3D Map */}
-      <motion.div
+      {/* ── 1. Sacred Tricolor Prana Aurora ────────────────────────────── */}
+      {/* Saffron Dawn at top */}
+      <div
         style={{
-          width: '100%',
-          maxWidth: '700px',
-          height: '100vh',
-          rotateX,
-          rotateY,
-          transformStyle: 'preserve-3d',
-          opacity: 0.4, // Subtle so content is readable
+          position: 'absolute',
+          top: '-15%',
+          left: '10%',
+          right: '10%',
+          height: '45vh',
+          background: 'radial-gradient(ellipse at center, rgba(255, 103, 31, 0.12) 0%, transparent 70%)',
+          filter: 'blur(60px)',
+          animation: 'auroraPulse 14s ease-in-out infinite alternate',
         }}
-        initial={{ scale: 0.8, opacity: 0 }}
-        animate={{ scale: 1, opacity: 0.4 }}
-        transition={{ duration: 2, ease: "easeOut" }}
+      />
+      {/* Emerald & Green Prithvi at bottom */}
+      <div
+        style={{
+          position: 'absolute',
+          bottom: '-15%',
+          left: '15%',
+          right: '15%',
+          height: '45vh',
+          background: 'radial-gradient(ellipse at center, rgba(4, 106, 56, 0.09) 0%, transparent 70%)',
+          filter: 'blur(70px)',
+          animation: 'auroraPulse 16s ease-in-out infinite alternate-reverse',
+        }}
+      />
+
+      {/* Sunburst radiant sacred geometry rays */}
+      <div className="sunburst" style={{ opacity: 0.08 }} />
+      <div className="pattern-rangoli" style={{ opacity: 0.035 }} />
+
+      {/* ── 2. Subtle Monumental Sacred Calligraphy Watermarks ─────────── */}
+      <div style={{
+        position: 'absolute',
+        inset: 0,
+        display: 'grid',
+        gridTemplateColumns: '1fr 1fr',
+        gridTemplateRows: '1fr 1fr',
+        padding: '5vw',
+        opacity: 0.045,
+        fontFamily: "'Yatra One', serif",
+        pointerEvents: 'none',
+        userSelect: 'none',
+        color: 'var(--saffron-deep)',
+      }}>
+        <div style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2.4rem)', alignSelf: 'start', justifySelf: 'start' }}>
+          ॥ राष्ट्राय स्वाहा, इदं न मम ॥
+        </div>
+        <div style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2.4rem)', alignSelf: 'start', justifySelf: 'end' }}>
+          ॥ सत्यमेव जयते ॥
+        </div>
+        <div style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2.4rem)', alignSelf: 'end', justifySelf: 'start' }}>
+          ॥ सा विद्या या विमुक्तये ॥
+        </div>
+        <div style={{ fontSize: 'clamp(1.4rem, 2.8vw, 2.4rem)', alignSelf: 'end', justifySelf: 'end' }}>
+          ॥ जननी जन्मभूमिश्च स्वर्गादपि गरीयसी ॥
+        </div>
+      </div>
+
+      {/* ── 3. 3D Parallax Canvas: Dharma Chakra & Akhanda Gyan Mandalam ── */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          perspective: 1400,
+        }}
       >
-        <svg
-          viewBox="0 0 800 944"
-          style={{ width: '100%', height: '100%', filter: 'drop-shadow(0px 30px 50px rgba(255,103,31,0.2))' }}
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
+        <motion.div
+          style={{
+            width: '100%',
+            maxWidth: '920px',
+            height: '90vh',
+            rotateX,
+            rotateY,
+            x: parallaxX,
+            y: parallaxY,
+            transformStyle: 'preserve-3d',
+            position: 'relative',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
         >
-          <defs>
-            <linearGradient id="tricolor" x1="0%" y1="0%" x2="0%" y2="100%">
-              <stop offset="0%" stopColor="#FF671F" stopOpacity="0.9" />
-              <stop offset="35%" stopColor="#FF671F" stopOpacity="0.85" />
-              <stop offset="45%" stopColor="#FFFFFF" stopOpacity="0.9" />
-              <stop offset="55%" stopColor="#FFFFFF" stopOpacity="0.9" />
-              <stop offset="65%" stopColor="#046A38" stopOpacity="0.85" />
-              <stop offset="100%" stopColor="#046A38" stopOpacity="0.9" />
-            </linearGradient>
+          {/* ── Layer A: Revolving 24-Spoked Ashoka Dharma Chakra ───────── */}
+          <div
+            style={{
+              position: 'absolute',
+              width: 'min(780px, 92vw)',
+              height: 'min(780px, 92vw)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              animation: 'spinClockwise 140s linear infinite',
+              opacity: 0.11,
+              filter: 'drop-shadow(0 0 20px rgba(217, 119, 6, 0.25))',
+            }}
+          >
+            <svg viewBox="0 0 600 600" style={{ width: '100%', height: '100%' }} fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="chakraGold" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#F59E0B" />
+                  <stop offset="50%" stopColor="#FF671F" />
+                  <stop offset="100%" stopColor="#D97706" />
+                </linearGradient>
+              </defs>
 
-            <filter id="extrusion">
-              <feDropShadow dx="3" dy="5" stdDeviation="0" floodColor="#D84315" floodOpacity="0.8" />
-              <feDropShadow dx="6" dy="10" stdDeviation="0" floodColor="#1B5E20" floodOpacity="0.5" />
-              <feDropShadow dx="0" dy="20" stdDeviation="15" floodColor="#FF671F" floodOpacity="0.4" />
-            </filter>
-          </defs>
+              {/* Outermost Sun Ring with 24 petal markings */}
+              <circle cx="300" cy="300" r="285" stroke="url(#chakraGold)" strokeWidth="1.5" strokeDasharray="3 4" />
+              <circle cx="300" cy="300" r="268" stroke="url(#chakraGold)" strokeWidth="3" />
+              <circle cx="300" cy="300" r="248" stroke="url(#chakraGold)" strokeWidth="1.5" />
 
-          <path
-            d={INDIA_PATH}
-            fill="url(#tricolor)"
-            stroke="#FFD54F"
-            strokeWidth="3"
-            filter="url(#extrusion)"
-            style={{ transform: 'translateZ(50px)' }}
-          />
-        </svg>
-      </motion.div>
+              {/* 24 Lotus Rosettes along rim */}
+              {Array.from({ length: 24 }).map((_, i) => {
+                const angle = (i * 15 * Math.PI) / 180;
+                const rx = 300 + 258 * Math.cos(angle);
+                const ry = 300 + 258 * Math.sin(angle);
+                return (
+                  <circle
+                    key={i}
+                    cx={rx}
+                    cy={ry}
+                    r="4"
+                    fill="url(#chakraGold)"
+                  />
+                );
+              })}
+
+              {/* 24 Tapered Spokes of the Dharma Chakra */}
+              {Array.from({ length: 24 }).map((_, i) => {
+                const angle = i * 15;
+                return (
+                  <g key={i} transform={`rotate(${angle} 300 300)`}>
+                    <polygon
+                      points="298,300 302,300 301,62 299,62"
+                      fill="url(#chakraGold)"
+                    />
+                    <polygon
+                      points="297,62 303,62 300,52"
+                      fill="url(#chakraGold)"
+                    />
+                  </g>
+                );
+              })}
+
+              {/* Central Sacred Nabhi (Hub) */}
+              <circle cx="300" cy="300" r="48" stroke="url(#chakraGold)" strokeWidth="2.5" />
+              <circle cx="300" cy="300" r="32" fill="url(#chakraGold)" opacity="0.4" />
+              <circle cx="300" cy="300" r="16" fill="url(#chakraGold)" />
+            </svg>
+          </div>
+
+          {/* ── Layer B: Counter-Rotating Konark Astronomical Ring ────── */}
+          <div
+            style={{
+              position: 'absolute',
+              width: 'min(620px, 80vw)',
+              height: 'min(620px, 80vw)',
+              borderRadius: '50%',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              animation: 'spinCounterClockwise 180s linear infinite',
+              opacity: 0.08,
+            }}
+          >
+            <svg viewBox="0 0 500 500" style={{ width: '100%', height: '100%' }} fill="none" xmlns="http://www.w3.org/2000/svg">
+              {/* Sacred concentric yantra circles */}
+              <circle cx="250" cy="250" r="230" stroke="var(--gold-rich)" strokeWidth="1.2" strokeDasharray="8 6" />
+              <circle cx="250" cy="250" r="180" stroke="var(--terracotta)" strokeWidth="1" strokeDasharray="2 3" />
+              <circle cx="250" cy="250" r="120" stroke="var(--gold-rich)" strokeWidth="1" />
+              {/* 8 Cardinal Direction Triangles (Ashta-Dikpala) */}
+              {Array.from({ length: 8 }).map((_, i) => (
+                <polygon
+                  key={i}
+                  points="250,30 255,42 245,42"
+                  fill="var(--gold-rich)"
+                  transform={`rotate(${i * 45} 250 250)`}
+                />
+              ))}
+            </svg>
+          </div>
+
+          {/* ── Layer C: Akhanda Gyan Mandalam (Sacred Constellation Map) */}
+          <div
+            style={{
+              position: 'relative',
+              width: 'min(520px, 88vw)',
+              height: 'min(620px, 90vh)',
+              opacity: 0.65,
+              transform: 'translateZ(25px)',
+            }}
+          >
+            <svg viewBox="0 0 500 620" style={{ width: '100%', height: '100%' }} fill="none" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <filter id="starGlow" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="3" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+                <linearGradient id="lineGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                  <stop offset="0%" stopColor="#FF7A1A" stopOpacity="0.4" />
+                  <stop offset="50%" stopColor="#F59E0B" stopOpacity="0.65" />
+                  <stop offset="100%" stopColor="#10B981" stopOpacity="0.4" />
+                </linearGradient>
+              </defs>
+
+              {/* Sacred Dotted Outline of Bharat Shoreline / Borders */}
+              <path
+                d="M 215,75 L 240,85 L 270,120 L 320,165 L 360,200 L 440,245 L 450,280 L 410,290 L 395,335 L 340,400 L 290,460 L 275,475 L 245,555 L 230,470 L 175,380 L 125,320 L 135,270 L 175,230 L 210,180 Z"
+                stroke="rgba(217, 119, 6, 0.24)"
+                strokeWidth="1.5"
+                strokeDasharray="4 6"
+                fill="none"
+              />
+
+              {/* Connecting Radiant Ley Lines */}
+              {NETWORK_EDGES.map(([srcId, dstId], idx) => {
+                const src = BHARAT_CONSTELLATIONS.find((c) => c.id === srcId);
+                const dst = BHARAT_CONSTELLATIONS.find((c) => c.id === dstId);
+                if (!src || !dst) return null;
+                return (
+                  <line
+                    key={idx}
+                    x1={src.x}
+                    y1={src.y}
+                    x2={dst.x}
+                    y2={dst.y}
+                    stroke="url(#lineGrad)"
+                    strokeWidth={src.hub || dst.hub ? 1.8 : 1.1}
+                    strokeDasharray={src.hub ? 'none' : '3 3'}
+                    opacity={src.hub ? 0.7 : 0.45}
+                  />
+                );
+              })}
+
+              {/* Constellation Knowledge Star Nodes */}
+              {BHARAT_CONSTELLATIONS.map((node) => {
+                const isCentral = node.hub;
+                return (
+                  <g key={node.id} transform={`translate(${node.x}, ${node.y})`}>
+                    {/* Pulsing Outer Halo for MANIT Bhopal */}
+                    {isCentral && (
+                      <>
+                        <circle
+                          r="16"
+                          fill="rgba(255, 103, 31, 0.25)"
+                          className="pulse-halo-slow"
+                        />
+                        <circle
+                          r="26"
+                          stroke="var(--saffron-vibrant)"
+                          strokeWidth="1.2"
+                          strokeDasharray="3 3"
+                          fill="none"
+                          className="spin-reverse-slow"
+                        />
+                      </>
+                    )}
+
+                    {/* Outer glow ring */}
+                    <circle
+                      r={isCentral ? 8 : 4.5}
+                      fill={isCentral ? '#FF671F' : '#F59E0B'}
+                      filter="url(#starGlow)"
+                      opacity={0.85}
+                    />
+
+                    {/* Bright Core Star */}
+                    <circle
+                      r={isCentral ? 5 : 2.5}
+                      fill="#FFFFFF"
+                    />
+
+                    {/* Central MANIT Bhopal Emblem Badge */}
+                    {isCentral && (
+                      <g transform="translate(0, 24)">
+                        <rect
+                          x="-65"
+                          y="-10"
+                          width="130"
+                          height="20"
+                          rx="10"
+                          fill="rgba(255, 253, 248, 0.94)"
+                          stroke="var(--saffron-vibrant)"
+                          strokeWidth="1"
+                        />
+                        <text
+                          textAnchor="middle"
+                          y="4"
+                          fill="#B45309"
+                          fontSize="9.5"
+                          fontWeight="700"
+                          fontFamily="'Yatra One', serif"
+                          letterSpacing="0.5px"
+                        >
+                          🚩 MANIT BHOPAL
+                        </text>
+                      </g>
+                    )}
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
+        </motion.div>
+      </div>
+
+      {/* ── 4. Floating Diya Sparks / Jyoti Bokeh Motes ────────────────── */}
+      {DIYA_PARTICLES.map((p) => (
+        <div
+          key={p.id}
+          style={{
+            position: 'absolute',
+            left: p.left,
+            bottom: '-20px',
+            width: `${p.size}px`,
+            height: `${p.size}px`,
+            borderRadius: '50%',
+            background: 'radial-gradient(circle, #FFB300 0%, #D97706 70%, transparent 100%)',
+            boxShadow: `0 0 8px rgba(217, 119, 6, ${p.opacity})`,
+            opacity: p.opacity,
+            animation: `riseUp ${p.duration}s cubic-bezier(0.4, 0, 0.2, 1) infinite`,
+            animationDelay: `${p.delay}s`,
+          }}
+        />
+      ))}
+
+      {/* Keyframe animations */}
+      <style>{`
+        @keyframes spinClockwise {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        @keyframes spinCounterClockwise {
+          from { transform: rotate(360deg); }
+          to { transform: rotate(0deg); }
+        }
+        @keyframes auroraPulse {
+          0% { transform: scale(1) translateY(0); opacity: 0.7; }
+          50% { transform: scale(1.08) translateY(-10px); opacity: 1; }
+          100% { transform: scale(0.96) translateY(10px); opacity: 0.75; }
+        }
+        @keyframes riseUp {
+          0% {
+            transform: translateY(0) scale(0.6);
+            opacity: 0;
+          }
+          15% {
+            opacity: 0.8;
+          }
+          85% {
+            opacity: 0.6;
+          }
+          100% {
+            transform: translateY(-108vh) scale(1.2);
+            opacity: 0;
+          }
+        }
+        .pulse-halo-slow {
+          animation: pulseHalo 4s ease-in-out infinite;
+        }
+        @keyframes pulseHalo {
+          0%, 100% { r: 14; opacity: 0.2; }
+          50% { r: 24; opacity: 0.5; }
+        }
+        .spin-reverse-slow {
+          transform-origin: center;
+          animation: spinCounterClockwise 30s linear infinite;
+        }
+      `}</style>
     </div>
   );
 }

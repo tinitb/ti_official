@@ -1,5 +1,5 @@
 /* =========================================================
-   GLOBAL RESET & VARIABLES (PEAK TRADITIONAL INDIAN)
+   GLOBAL RESET & VARIABLES (PEAK TRADITIONAL INDIAN - ROYAL DARK)
 ========================================================= */
 
 *, *::before, *::after {
@@ -9,39 +9,52 @@
 }
 
 :root {
-  /* Logo & Cultural Palette */
+  /* Common Vibrant Cultural Accents */
   --saffron-vibrant: #FF671F;
   --saffron-deep: #D84315;
-  --terracotta: #BF360C;
+  --terracotta: #C83803;
   --green-india: #046A38;
-  --green-dark: #1B5E20;
-  --gold-rich: #FFD54F;
-  --gold-dark: #FFB300;
+  --green-dark: #024724;
+  --gold-rich: #F59E0B;
+  --gold-dark: #D97706;
+  --chakra-blue: #06038D;
   
-  --bg-parchment: #FDF9F1;
-  --bg-parchment-dark: #F4EBE1;
-  --bg-brown: #3E2723;
+  /* RADIANT LITE THEME — Sacred Temple Ivory & Warm Parchment */
+  --bg-parchment: #FDF9F2;
+  --bg-parchment-dark: #F5EEE2;
+  --bg-card: rgba(255, 255, 255, 0.94);
+  --bg-card-hover: #FFFFFF;
+  --bg-card-border: rgba(217, 119, 6, 0.28);
+  --bg-brown: #EFE4D3;
   
-  --text-dark: #2D1B15;
-  --text-muted: #5D4037;
+  /* High-Contrast Devotional Typography */
+  --text-dark: #22140C;
+  --text-muted: #5C4336;
+  --text-dim: #886A5A;
   --white: #ffffff;
   
-  --border-ornate: 2px solid var(--gold-dark);
+  --border-ornate: 1.5px solid var(--gold-dark);
+  --nav-bg: rgba(253, 249, 242, 0.96);
+  --footer-bg: #140C08;
+  --card-shadow: 0 12px 35px rgba(62, 39, 35, 0.08);
 }
 
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  background-color: var(--bg-parchment);
 }
 
 body {
   font-family: 'Laila', serif;
   background-color: var(--bg-parchment);
   background-image: 
-    radial-gradient(circle at 100% 100%, rgba(216, 67, 21, 0.03) 0%, transparent 50%),
-    radial-gradient(circle at 0% 0%, rgba(4, 106, 56, 0.03) 0%, transparent 50%);
+    radial-gradient(circle at 100% 0%, rgba(255, 103, 31, 0.06) 0%, transparent 50%),
+    radial-gradient(circle at 0% 100%, rgba(4, 106, 56, 0.05) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(245, 158, 11, 0.035) 0%, transparent 70%);
   color: var(--text-dark);
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 .font-yatra {
@@ -72,9 +85,10 @@ button {
   color: white;
 }
 
-::-webkit-scrollbar { width: 10px; }
-::-webkit-scrollbar-track { background: var(--bg-parchment-dark); border-left: 1px solid rgba(0,0,0,0.1); }
-::-webkit-scrollbar-thumb { background: var(--terracotta); border-radius: 0; }
+::-webkit-scrollbar { width: 9px; }
+::-webkit-scrollbar-track { background: var(--bg-parchment-dark); }
+::-webkit-scrollbar-thumb { background: rgba(255, 122, 26, 0.6); border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: var(--saffron-vibrant); }
 
 /* =========================================================
    CULTURAL PATTERNS & MOTIFS
@@ -83,32 +97,32 @@ button {
 .pattern-rangoli {
   position: absolute;
   inset: 0;
-  opacity: 0.04;
+  opacity: 0.035;
   pointer-events: none;
-  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0C50 25 75 50 100 50C75 50 50 75 50 100C50 75 25 50 0 50C25 50 50 25 50 0Z' fill='%23D84315' fill-opacity='1'/%3E%3Cpath d='M50 20C50 35 65 50 80 50C65 50 50 65 50 80C50 65 35 50 20 50C35 50 50 35 50 20Z' fill='%23046A38' fill-opacity='0.5'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 0C50 25 75 50 100 50C75 50 50 75 50 100C50 75 25 50 0 50C25 50 50 25 50 0Z' fill='%23FF7A1A' fill-opacity='1'/%3E%3Cpath d='M50 20C50 35 65 50 80 50C65 50 50 65 50 80C50 65 35 50 20 50C35 50 50 35 50 20Z' fill='%2310B981' fill-opacity='0.6'/%3E%3C/svg%3E");
   background-size: 150px 150px;
 }
 
 .border-ornate {
   position: relative;
   padding: 2rem;
-  background: var(--bg-parchment);
-  border: 1px solid rgba(216, 67, 21, 0.2);
-  box-shadow: 0 10px 30px rgba(62, 39, 35, 0.05);
+  background: var(--bg-card);
+  border: 1px solid rgba(245, 158, 11, 0.3);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
 }
 
 .border-ornate::before, .border-ornate::after {
   content: '';
   position: absolute;
-  width: 30px;
-  height: 30px;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 0C12 8 20 12 24 12C20 12 12 16 12 24C12 16 4 12 0 12C4 12 12 8 12 0Z' fill='%23D84315'/%3E%3C/svg%3E") no-repeat center/contain;
+  width: 28px;
+  height: 28px;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 0C12 8 20 12 24 12C20 12 12 16 12 24C12 16 4 12 0 12C4 12 12 8 12 0Z' fill='%23F59E0B'/%3E%3C/svg%3E") no-repeat center/contain;
 }
 
-.border-ornate::before { top: -15px; left: -15px; }
-.border-ornate::after { bottom: -15px; right: -15px; }
+.border-ornate::before { top: -14px; left: -14px; }
+.border-ornate::after { bottom: -14px; right: -14px; }
 
-/* Sunburst Animation (Logo Match) */
+/* Sunburst Animation (Subtle Ambient Glow) */
 .sunburst {
   position: absolute;
   top: 50%; left: 50%;
@@ -117,13 +131,13 @@ button {
   background: repeating-conic-gradient(
     from 0deg,
     transparent 0deg 10deg,
-    rgba(255, 103, 31, 0.05) 10deg 20deg
+    rgba(255, 122, 26, 0.04) 10deg 20deg
   );
   border-radius: 50%;
-  animation: rotateSun 60s linear infinite;
+  animation: rotateSun 80s linear infinite;
   pointer-events: none;
-  mask-image: radial-gradient(circle, black 20%, transparent 70%);
-  -webkit-mask-image: radial-gradient(circle, black 20%, transparent 70%);
+  mask-image: radial-gradient(circle, black 25%, transparent 70%);
+  -webkit-mask-image: radial-gradient(circle, black 25%, transparent 70%);
 }
 
 @keyframes rotateSun {
@@ -139,32 +153,33 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  padding: 1rem 2.5rem;
-  background: var(--terracotta);
+  padding: 0.95rem 2.4rem;
+  background: linear-gradient(135deg, #FF671F 0%, #D84315 100%);
   color: var(--white);
   font-family: 'Yatra One', display;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   letter-spacing: 0.05em;
   position: relative;
   overflow: hidden;
-  border: 2px solid var(--gold-dark);
-  box-shadow: 0 8px 20px rgba(191, 54, 12, 0.3);
-  transition: all 0.4s ease;
+  border: 1.5px solid var(--gold-rich);
+  border-radius: 8px;
+  box-shadow: 0 8px 25px rgba(255, 103, 31, 0.35);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-cultural::before {
   content: '';
   position: absolute;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,213,79,0.3), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
   transform: translateX(-100%);
   transition: transform 0.6s ease;
 }
 
 .btn-cultural:hover {
-  background: var(--saffron-deep);
-  transform: translateY(-3px);
-  box-shadow: 0 12px 25px rgba(191, 54, 12, 0.4);
+  background: linear-gradient(135deg, #FF7A1A 0%, #E65100 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 30px rgba(255, 103, 31, 0.5);
 }
 
 .btn-cultural:hover::before {
@@ -176,19 +191,24 @@ button {
   align-items: center;
   justify-content: center;
   gap: 0.75rem;
-  padding: 1rem 2.5rem;
-  background: transparent;
-  color: var(--terracotta);
+  padding: 0.9rem 2.2rem;
+  background: rgba(255, 122, 26, 0.08);
+  color: var(--saffron-deep);
   font-family: 'Yatra One', display;
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   letter-spacing: 0.05em;
-  border: 2px solid var(--terracotta);
-  transition: all 0.4s ease;
+  border: 1.5px solid var(--saffron-vibrant);
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-cultural-outline:hover {
-  background: rgba(191, 54, 12, 0.05);
-  transform: translateY(-3px);
+  background: rgba(255, 122, 26, 0.2);
+  border-color: var(--gold-rich);
+  color: #fff;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(255, 122, 26, 0.25);
 }
 
 /* =========================================================
@@ -251,25 +271,26 @@ button {
   position: fixed;
   top: 0; left: 0; right: 0;
   z-index: 1000;
-  padding: 1rem 2rem;
-  transition: all 0.4s ease;
-  background: rgba(253, 249, 241, 0.95);
-  border-bottom: 2px solid rgba(216, 67, 21, 0.1);
-  box-shadow: 0 4px 20px rgba(62, 39, 35, 0.08);
-  backdrop-filter: blur(8px);
+  padding: 0.85rem 2rem;
+  transition: all 0.35s ease;
+  background: var(--nav-bg);
+  border-bottom: 1.5px solid var(--bg-card-border);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  backdrop-filter: blur(14px);
 }
 
 .nav-link {
   font-family: 'Yatra One', display;
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   color: var(--text-dark);
   position: relative;
   padding: 0.5rem 0;
-  transition: color 0.3s ease;
+  transition: color 0.25s ease;
+  letter-spacing: 0.5px;
 }
 
 .nav-link:hover {
-  color: var(--terracotta);
+  color: var(--saffron-deep);
 }
 
 .nav-link::after {
@@ -316,4 +337,103 @@ button {
     font-size: 0.6rem !important;
   }
 }
+
+/* =========================================================
+   ENHANCED BHARATIYA & MANIT CULTURAL THEME
+========================================================= */
+
+.cultural-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 1.5rem auto;
+  color: var(--gold-dark);
+}
+
+.cultural-divider::before,
+.cultural-divider::after {
+  content: '';
+  height: 2px;
+  width: 60px;
+  background: linear-gradient(90deg, transparent, var(--gold-dark));
+}
+
+.cultural-divider::after {
+  background: linear-gradient(90deg, var(--gold-dark), transparent);
+}
+
+.shloka-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.45rem 1.5rem;
+  border-radius: 999px;
+  background: var(--bg-card);
+  border: 1.5px solid var(--saffron-vibrant);
+  color: var(--saffron-deep);
+  font-weight: 700;
+  font-size: 1rem;
+  letter-spacing: 1.2px;
+  box-shadow: 0 4px 15px rgba(255, 103, 31, 0.15);
+}
+
+.jharokha-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(16px);
+  border: 1.5px solid var(--bg-card-border);
+  border-radius: 18px;
+  box-shadow: var(--card-shadow), inset 0 0 0 1px rgba(255, 213, 79, 0.08);
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.jharokha-card:hover {
+  background: var(--bg-card-hover);
+  border-color: var(--saffron-vibrant);
+  box-shadow: 0 20px 48px rgba(255, 103, 31, 0.2), 0 0 20px rgba(245, 158, 11, 0.15);
+}
+
+.jharokha-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--saffron-vibrant) 33%, #FCD34D 50%, var(--green-india) 80%);
+  z-index: 10;
+}
+
+.cultural-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.cultural-badge-saffron {
+  background: rgba(255, 122, 26, 0.16);
+  color: var(--saffron-deep);
+  border: 1px solid rgba(255, 122, 26, 0.45);
+}
+
+.cultural-badge-green {
+  background: rgba(16, 185, 129, 0.15);
+  color: var(--green-india);
+  border: 1px solid rgba(16, 185, 129, 0.45);
+}
+
+.cultural-badge-gold {
+  background: rgba(245, 158, 11, 0.18);
+  color: var(--gold-rich);
+  border: 1px solid rgba(245, 158, 11, 0.45);
+}
+
 
